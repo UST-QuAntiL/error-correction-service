@@ -38,14 +38,21 @@ def applyECC(request: ApplyECCRequest):
     depth = []
     for circuit in request.circuit:
         # converting openqasm2 strings to qiskit circuit objects
-        circuit_to_save_to_file =  QuantumCircuit().from_qasm_str(circuit)
-        circuit_to_save_to_file.qasm(formatted=False, filename='temp_circuit.qasm')
+        circuit_to_save_to_file = QuantumCircuit().from_qasm_str(circuit)
+        circuit_to_save_to_file.qasm(formatted=False, filename="temp_circuit.qasm")
 
-        result = qecc.apply_ecc("./temp_circuit.qasm", request.errorCorrectionCode, request.eccFrequency)
+        result = qecc.apply_ecc(
+            "./temp_circuit.qasm", request.errorCorrectionCode, request.eccFrequency
+        )
 
         corrected_circ = QuantumCircuit().from_qasm_str(result["circ"])
         ecc_circuits.append(corrected_circ)
         depth.append(corrected_circ.depth())
         width.append(corrected_circ.num_qubits)
 
-    return ApplyECCResponse(circuit=ecc_circuits, circuit_depth=depth, circuit_width=width, list_input= list_input)
+    return ApplyECCResponse(
+        circuit=ecc_circuits,
+        circuit_depth=depth,
+        circuit_width=width,
+        list_input=list_input,
+    )

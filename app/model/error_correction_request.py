@@ -1,6 +1,7 @@
 import marshmallow as ma
 from marshmallow import fields, ValidationError
 
+
 class CircuitField(fields.Field):
     def _deserialize(self, value, attr, data, **kwargs):
         if isinstance(value, str) or isinstance(value, list):
@@ -8,13 +9,10 @@ class CircuitField(fields.Field):
         else:
             raise ValidationError("Field should be str or list")
 
+
 class ApplyECCRequest:
     def __init__(
-        self,
-        circuit,
-        errorCorrectionCode,
-        eccFrequency=100,
-        circuitFormat="openqasm2"
+        self, circuit, errorCorrectionCode, eccFrequency=100, circuitFormat="openqasm2"
     ):
         self.circuit = circuit
         self.errorCorrectionCode = errorCorrectionCode
@@ -27,4 +25,3 @@ class ApplyECCRequestSchema(ma.Schema):
     errorCorrectionCode = ma.fields.Str(required=True)
     eccFrequency = ma.fields.Int(required=False)
     circuitFormat = ma.fields.Str(required=False)
-

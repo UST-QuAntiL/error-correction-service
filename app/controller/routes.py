@@ -39,17 +39,14 @@ blp = Blueprint(
 @blp.arguments(
     ApplyECCRequestSchema,
     example={
-        "circuit": "OPENQASM 2.0;\ninclude \"qelib1.inc\";qreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\n",
+        "circuit": 'OPENQASM 2.0;\ninclude "qelib1.inc";qreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\n',
         "errorCorrectionCode": "Q7Steane",
         "eccFrequency": "20",
     },
-    description="Q3Shor, Q5Laflamme, Q7Steane, Q9Shor, Q9Surface, and Q18Surface are currently supported ECC codes (Details here: https://mqt.readthedocs.io/projects/qecc/en/latest/EccFramework.html)"
+    description="Q3Shor, Q5Laflamme, Q7Steane, Q9Shor, Q9Surface, and Q18Surface are currently supported ECC codes (Details here: https://mqt.readthedocs.io/projects/qecc/en/latest/EccFramework.html)",
 )
 @blp.response(200, ApplyECCResponseSchema)
 def compute_corrected_circuit(json: dict):
     """Precompute classical MaxCut solution."""
     print("request", json)
-    return error_correction_service.applyECC(
-        ApplyECCRequest(**json)
-    )
-
+    return error_correction_service.applyECC(ApplyECCRequest(**json))

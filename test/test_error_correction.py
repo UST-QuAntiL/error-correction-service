@@ -22,7 +22,7 @@ class FlaskClientTestCase(unittest.TestCase):
             "/applyECC",
             data=json.dumps(
                 {
-                    "circuit": "OPENQASM 2.0;\ninclude \"qelib1.inc\";qreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\n",
+                    "circuit": 'OPENQASM 2.0;\ninclude "qelib1.inc";qreg q[2];\ncreg c[2];\nh q[0];\ncx q[0], q[1];\n',
                     "errorCorrectionCode": "Q7Steane",
                     "eccFrequency": "20",
                 }
@@ -31,5 +31,3 @@ class FlaskClientTestCase(unittest.TestCase):
         )
         self.assertEqual(response.status_code, 200)
         print(response.get_json())
-
-
