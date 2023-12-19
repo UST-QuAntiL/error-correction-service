@@ -9,20 +9,20 @@ Thus, fault-tolerant circuits can be created improving the accuracy of the resul
 
 The easiest way to get start is using a pre-built Docker image:
 
-``docker run -p 5077:5077 planqk/error-correction-service``
+``docker run -p 5078:5078 planqk/error-correction-service``
 
 Alternatively, the service can be built manually:
 1. Clone the repository using ``git clone https://github.com/UST-QuAntiL/error-correction-service.git``
 2. Navigate to the corresponding folder within the cloned repository ``cd error-correction-service``
 3. Build the Docker container: ``docker build -t error-correction-service .``
-4. Run the Docker container: ``docker run -p 5077:5077 error-correction-service``
+4. Run the Docker container: ``docker run -p 5078:5078 error-correction-service``
 
-Then the service can be accessed via: [http://127.0.0.1:5077](http://127.0.0.1:5077).
+Then the service can be accessed via: [http://127.0.0.1:5078](http://127.0.0.1:5078).
 
 ## API Documentation
 
 The error-correction service provides a Swagger UI, specifying the request schemas and showcasing exemplary requests for all API endpoints.
- * Swagger UI: [http://127.0.0.1:5077/api/swagger-ui](http://127.0.0.1:5077/api/swagger-ui).
+ * Swagger UI: [http://127.0.0.1:5078/api/swagger-ui](http://127.0.0.1:5078/api/swagger-ui).
 
 ## Developer Guide
 
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ```
 
 ### Execution:
-* Run the application with: ``flask run --port=5077``
+* Run the application with: ``flask run --port=5078``
 * Test with: ``python -m unittest discover``
 * Coverage with: ``coverage run --branch --include 'app/*' -m unittest discover; coverage report``
 
