@@ -29,7 +29,7 @@ from app.model.error_correction_request import (
 )
 
 # Applies the Error Correction codes to all incoming circuits using the TUM Toolkit
-def applyECC(request: ApplyECCRequest):
+def apply_ecc(request: ApplyECCRequest):
     # move individual circuit into list for uniform handling
     list_input = True
     if isinstance(request.circuit, str):
@@ -38,14 +38,18 @@ def applyECC(request: ApplyECCRequest):
 
     # convert string to circuit
     if request.circuitFormat == "openqasm2":
-        circuits = [QuantumCircuit().from_qasm_str(circuit) for circuit in request.circuit]
-    elif request.circuitFormat == 'openqasm3':
+        circuits = [
+            QuantumCircuit().from_qasm_str(circuit) for circuit in request.circuit
+        ]
+    elif request.circuitFormat == "openqasm3":
         circuits = [qasm3.dumps(circuit) for circuit in request.circuit]
     else:
-        return 'Currently only openqasm2 and openqasm3 are supported as circuit formats'
+        return "Currently only openqasm2 and openqasm3 are supported as circuit formats"
 
     # transpile circuits for gates supported by the selected method
-    transpiled_circuits = transpile_for_supported_gates(circuits, request.errorCorrectionCode)
+    transpiled_circuits = transpile_for_supported_gates(
+        circuits, request.errorCorrectionCode
+    )
 
     ecc_circuits = []
     width = []
@@ -69,28 +73,49 @@ def applyECC(request: ApplyECCRequest):
         list_input=list_input,
     )
 
-def transpile_for_supported_gates(circuits, error_correction_code):
-    identity_gate = ['id']
-    pauli_gates = ['x', 'y', 'z']
-    controlled_pauli_gates = ['cx', 'cy', 'cz']
-    hadamard_gate = ['h']
-    s_t_gates= ['s', 't', 'sdg', 'tdg']
 
-    if error_correction_code == 'Q3Shor':
-        supported_gates = identity_gate + pauli_gates + controlled_pauli_gates + hadamard_gate + s_t_gates
-    elif error_correction_code == 'Q5Laflamme':
+def transpile_for_supported_gates(circuits, error_correction_code):
+    identity_gate = ["id"]
+    pauli_gates = ["x", "y", "z"]
+    controlled_pauli_gates = ["cx", "cy", "cz"]
+    hadamard_gate = ["h"]
+    s_t_gates = ["s", "t", "sdg", "tdg"]
+
+    if error_correction_code == "Q3Shor":
+        supported_gates = (
+            identity_gate
+            + pauli_gates
+            + controlled_pauli_gates
+            + hadamard_gate
+            + s_t_gates
+        )
+    elif error_correction_code == "Q5Laflamme":
         supported_gates = identity_gate + pauli_gates
-    elif error_correction_code == 'Q7Steane':
-        supported_gates = identity_gate + pauli_gates + controlled_pauli_gates + hadamard_gate + s_t_gates
-    elif error_correction_code == 'Q9Shor':
+    elif error_correction_code == "Q7Steane":
+        supported_gates = (
+            identity_gate
+            + pauli_gates
+            + controlled_pauli_gates
+            + hadamard_gate
+            + s_t_gates
+        )
+    elif error_correction_code == "Q9Shor":
         supported_gates = identity_gate + pauli_gates + controlled_pauli_gates
-    elif error_correction_code == 'Q9Surface':
-        supported_gates = identity_gate + pauli_gates + controlled_pauli_gates + hadamard_gate
-    elif error_correction_code == 'Q18Surface':
+    elif error_correction_code == "Q9Surface":
+        supported_gates = (
+            identity_gate + pauli_gates + controlled_pauli_gates + hadamard_gate
+        )
+    elif error_correction_code == "Q18Surface":
         supported_gates = identity_gate + pauli_gates + hadamard_gate
     else:
-        return 'error correction code: ' + error_correction_code + ' not supported. Check the OpenAPI spec to get a list of all currently supported error correction codes'
+        return (
+            "error correction code: "
+            + error_correction_code
+            + " not supported. Check the OpenAPI spec to get a list of all currently supported error correction codes"
+        )
     print(supported_gates)
 
-    transpiled_circuits = [transpile(circuit, basis_gates=supported_gates) for circuit in circuits]
+    transpiled_circuits = [
+        transpile(circuit, basis_gates=supported_gates) for circuit in circuits
+    ]
     return transpiled_circuits
