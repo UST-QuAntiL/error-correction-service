@@ -17,7 +17,7 @@ class ApplyECCRequest:
         self.circuit = circuit
         self.errorCorrectionCode = errorCorrectionCode
         self.eccFrequency = eccFrequency
-        self.circuitFormat = circuitFormat
+        self.circuitFormat = circuitFormat.lower()
 
 
 class ApplyECCRequestSchema(ma.Schema):
