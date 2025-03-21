@@ -2,8 +2,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-The error-correction service the application of error correction codes to circuits.
-Thus, fault-tolerant circuits can be created improving the accuracy of the results.
+The error-correction service the application of error correction codes to circuits, enabling the computation of fault-tolerant circuits.
+Currently, the error correction codes provided by [QECC](https://mqt.readthedocs.io/projects/qecc/en/latest/index.html) are supported.
 
 ## Running the Service
 

@@ -7,4 +7,4 @@ RUN pip3 install -r requirements.txt
 
 ENTRYPOINT [ "python" ]
 
-CMD ["ws-app.py" ]
+CMD ["ec-app.py" ]
