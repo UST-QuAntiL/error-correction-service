@@ -47,6 +47,6 @@ blp = Blueprint(
 )
 @blp.response(200, ApplyECCResponseSchema)
 def compute_corrected_circuit(json: dict):
-    """Precompute classical MaxCut solution."""
+    """Apply Error Correction Codes."""
     print("request", json)
     return error_correction_service.apply_ecc(ApplyECCRequest(**json))
